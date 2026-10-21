@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>社内チャット</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- サイドバー -->
+    <aside class="sidebar" id="sidebar" aria-label="チャンネル一覧">
+      <div class="sidebar-header">
+        <div class="brand"><span class="brand-logo">💬</span> 社内チャット</div>
+      </div>
+
+      <div class="sidebar-section-title">
+        <span>チャンネル</span>
+        <button class="icon-btn" id="addChannelBtn" title="チャンネルを作る" aria-label="チャンネルを作る">＋</button>
+      </div>
+      <nav class="channel-list" id="channelList"></nav>
+
+      <div class="sidebar-footer">
+        <button class="me" id="meBtn" title="名前を変更">
+          <span class="avatar" id="meAvatar">?</span>
+          <span class="me-info">
+            <span class="me-name" id="meName">未設定</span>
+            <span class="me-hint">クリックで名前を変更</span>
+          </span>
+        </button>
+      </div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <!-- メイン -->
+    <main class="main">
+      <header class="main-header">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="チャンネル一覧を開く">☰</button>
+        <div class="channel-title">
+          <h1 id="channelName">読み込み中…</h1>
+          <p id="channelDesc"></p>
+        </div>
+        <div class="status" id="status" title="接続状態"><span class="dot"></span><span class="status-text">接続中</span></div>
+      </header>
+
+      <section class="messages" id="messages" aria-live="polite">
+        <div class="empty">読み込み中…</div>
+      </section>
+
+      <footer class="composer">
+        <form id="composerForm" class="composer-box">
+          <textarea id="messageInput" rows="1" placeholder="メッセージを入力…" maxlength="2000" aria-label="メッセージ"></textarea>
+          <button type="submit" class="send-btn" id="sendBtn" disabled>送信 ➤</button>
+        </form>
+        <p class="composer-hint"><kbd>Enter</kbd> で送信 ／ <kbd>Shift</kbd> + <kbd>Enter</kbd> で改行</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- 名前入力モーダル -->
+  <div class="modal" id="nameModal" hidden>
+    <form class="modal-card" id="nameForm">
+      <div class="modal-emoji">👋</div>
+      <h2>ようこそ！</h2>
+      <p>チャットで表示されるあなたの名前を入力してください。<br>（例：営業部 山田）</p>
+      <input type="text" id="nameInput" maxlength="30" placeholder="お名前" required autocomplete="off">
+      <button type="submit" class="primary-btn">はじめる</button>
+    </form>
+  </div>
+
+  <!-- チャンネル作成モーダル -->
+  <div class="modal" id="channelModal" hidden>
+    <form class="modal-card" id="channelForm">
+      <h2>新しいチャンネル</h2>
+      <p>話題ごとに部屋を分けられます。</p>
+      <div class="icon-picker" id="iconPicker"></div>
+      <input type="text" id="channelNameInput" maxlength="20" placeholder="チャンネル名（例：営業部）" required autocomplete="off">
+      <input type="text" id="channelDescInput" maxlength="50" placeholder="説明（なくてもOK）" autocomplete="off">
+      <div class="modal-actions">
+        <button type="button" class="ghost-btn" data-close>キャンセル</button>
+        <button type="submit" class="primary-btn">作成する</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
